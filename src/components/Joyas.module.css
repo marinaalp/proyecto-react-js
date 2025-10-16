@@ -1,0 +1,25 @@
+/* Animación de Pulso Lento */
+@keyframes glow-pulse {
+    0%, 100% {
+        /* Brillo Fuerte (Máximo) */
+        text-shadow:
+            0 0 10px #ad3232,
+            0 0 20px rgb(255, 251, 0), /* Color neón (ej. cian) */
+            0 0 30px rgb(255, 251, 0),
+            0 0 40px rgb(255, 251, 0);
+    }
+    50% {
+        /* Brillo Suave (Mínimo) */
+        text-shadow:
+            0 0 5px #1762ac,
+            0 0 10px rgb(255, 251, 0); /* Solo un brillo base */
+    }
+}
+
+/* Clase que aplica la animación y controla la velocidad */
+.pulsingTitle {
+    color: #fff; 
+    font-weight: bold;
+    /* duración: 3 segundos */
+    animation: glow-pulse 3s infinite alternate; 
+}

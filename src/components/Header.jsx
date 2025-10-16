@@ -1,4 +1,4 @@
-import NavBar from './Navbar';
+import NavBar from './NavBar';
 import { Link } from 'react-router-dom';
 // Importamos iconos de React Icons (Font Awesome)
 import { FaUser, FaUserAstronaut } from 'react-icons/fa';
