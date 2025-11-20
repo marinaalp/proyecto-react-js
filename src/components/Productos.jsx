@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Tarjeta from './Tarjeta';
+import { useProductosContext } from "../context/ProductosContext";
 
 const Productos = ({ agregarProducto }) => {
 
-    const [productos, setProductos] = useState([]);
-    const [cargando, setCargando] = useState(true);
-    const [error, setError] = useState(null);
+    // Usamos los contextos 
+  const { productos, cargando, error } = useProductosContext();
+
+    // const [productos, setProductos] = useState([]);
+    // const [cargando, setCargando] = useState(true);
+    // const [error, setError] = useState(null);
 
     const URL = 'https://68dc73387cd1948060aa52c6.mockapi.io/api-proyecto-v1/productos';
 
