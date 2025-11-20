@@ -9,6 +9,9 @@ import Contacto from './components/Contacto';
 import Joyas from './components/Joyas';
 import Footer from './components/Footer';
 import Tecnologia from './components/Tecnologia';
+import Login from './pages/Login.jsx';
+import RutaProtegida from './components/RutaProtegida';
+import Admin from './pages/Admin.jsx';
 
 
 
@@ -24,8 +27,10 @@ function App() {
         <Route path='/tecnologia' element={<Tecnologia />}/> 
         <Route path='/contacto' element={<Contacto />}/>
         <Route path='/productos/:id' element={<ProductoDetalle />}/>
-        {/* <Route path='/carrito' element={<Carrito/>}/> */}
+        <Route path='/carrito' element={<RutaProtegida><Carrito/></RutaProtegida>}/>
         <Route path='/joyas' element={<Joyas/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/admin' element={<RutaProtegida><Admin/></RutaProtegida>}/>
         
       </Routes> 
       <Footer/>     
