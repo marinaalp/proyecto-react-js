@@ -2,6 +2,7 @@ import React from 'react';
 import { FaTrashAlt } from 'react-icons/fa'; // Icono para eliminar
 
 const Carrito = ({ productosEnCarrito, productosEliminados }) => {
+  const IconoEliminar = () => <FaTrashAlt className="me-1"/>;
   
    // 1. Calcular el total, se calculará en cada renderizado
   const total = productosEnCarrito.reduce((suma, producto) => suma + producto.price, 0);
@@ -50,7 +51,7 @@ const Carrito = ({ productosEnCarrito, productosEliminados }) => {
                     className="btn btn-outline-danger btn-sm" 
                     onClick={() => productosEliminados(indice)}
                   >
-                    <FaTrashAlt className="me-1" /> Eliminar
+                    {IconoEliminar()} Eliminar
                   </button>
                 </div>
               ))}

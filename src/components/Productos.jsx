@@ -8,24 +8,6 @@ const Productos = ({ agregarProducto }) => {
     // Usamos los contextos 
   const { productos, cargando, error } = useProductosContext();
 
-    // const [productos, setProductos] = useState([]);
-    // const [cargando, setCargando] = useState(true);
-    // const [error, setError] = useState(null);
-
-    const URL = 'https://68dc73387cd1948060aa52c6.mockapi.io/api-proyecto-v1/productos';
-
-    useEffect(() => {
-        fetch(URL)
-            .then((respuesta) => respuesta.json())
-            .then((datos) => {
-                setProductos(datos);
-                setCargando(false);
-            })
-            .catch((error) => {
-                setError('Error cuando se cargan productos');
-                setCargando(false);
-            })
-    }, []);
 
     if (cargando) return '...Cargando productos...';
     if (error) return error;

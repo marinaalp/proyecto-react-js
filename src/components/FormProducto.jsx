@@ -58,7 +58,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                   id="nombre"
                   className={styles.formInputBase}
                   placeholder="Ingrese el nombre del producto"
-                  value={producto.nombre || ""}
+                  value={producto.title || ""}
                   onChange={manejarChange}
                   required
                 />
@@ -74,7 +74,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                   id="precio"
                   className={styles.formInputBase}
                   placeholder="$0.00"
-                  value={producto.precio || ""}
+                  value={producto.price || ""}
                   onChange={manejarChange}
                   required
                   min="0"
@@ -93,7 +93,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                   id="imagen"
                   className={styles.formInputBase}
                   placeholder="https://ejemplo.com/imagen.jpg"
-                  value={producto.imagen || ""}
+                  value={producto.image || ""}
                   onChange={manejarChange}
                 />
               </div>
@@ -108,7 +108,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                   rows="4"
                   className={styles.formInputBase}
                   placeholder="Escriba la descripción del producto aquí"
-                  value={producto.descripcion || ""}
+                  value={producto.description || ""}
                   onChange={manejarChange}
                   required
                 ></textarea>
