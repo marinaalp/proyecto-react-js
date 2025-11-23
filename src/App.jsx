@@ -12,28 +12,38 @@ import Tecnologia from './pages/Tecnologia';
 import Login from './pages/Login.jsx';
 import RutaProtegida from './components/RutaProtegida';
 import Admin from './pages/Admin.jsx';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
 function App() {
-  
- return (
+
+  return (
     <>
-      <Header/>
-      
-        <Routes> 
-        <Route path='/' element={<Inicio />}/> 
-        <Route path='/moda' element={<Moda />}/> 
-        <Route path='/tecnologia' element={<Tecnologia />}/> 
-        <Route path='/contacto' element={<Contacto />}/>
-        <Route path='/productos/:id' element={<ProductoDetalle />}/>
-        <Route path='/carrito' element={<RutaProtegida><Carrito/></RutaProtegida>}/>
-        <Route path='/joyas' element={<Joyas/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/admin' element={<RutaProtegida><Admin/></RutaProtegida>}/>
-        
-      </Routes> 
-      <Footer/>     
+      <Header />
+
+      <Routes>
+        <Route path='/' element={<Inicio />} />
+        <Route path='/moda' element={<Moda />} />
+        <Route path='/tecnologia' element={<Tecnologia />} />
+        <Route path='/contacto' element={<Contacto />} />
+        <Route path='/productos/:id' element={<ProductoDetalle />} />
+        <Route path='/carrito' element={<RutaProtegida><Carrito /></RutaProtegida>} />
+        <Route path='/joyas' element={<Joyas />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/admin' element={<RutaProtegida><Admin /></RutaProtegida>} />
+
+      </Routes>
+      <Footer />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   )
 }
