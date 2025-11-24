@@ -1,16 +1,21 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Tarjeta from './Tarjeta';
 import { useProductosContext } from "../context/ProductosContext";
+import { useBusqueda } from "../context/BusquedaContext";
 
 const Productos = ({ agregarProducto }) => {
 
     // Usamos los contextos 
   const { productos, cargando, error } = useProductosContext();
+   const { busqueda } = useBusqueda();
 
 
     if (cargando) return '...Cargando productos...';
     if (error) return error;
+
+     // Filtrado
+  const productosFiltrados = productos.filter((producto) =>
+    producto.title.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
     return (
 
@@ -21,9 +26,10 @@ const Productos = ({ agregarProducto }) => {
         - row: Define una fila.
         - g-4: Define un "gutter" (espaciado) de 4 entre las columnas.
       */}
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-                {productos.map((producto) => (
-
+            
+                {productosFiltrados.length > 0 ? (
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+                {productosFiltrados.map((producto) => (
                     < div key={producto.id} className="col" >
                         <Tarjeta
                             producto={producto}
@@ -32,7 +38,13 @@ const Productos = ({ agregarProducto }) => {
                     </div>
                 ))}
             </div>
-        </div >
+                ) : (
+                    <div className="d-flex justify-content-center w-100 mt-5">
+                    <p class="alert alert-secondary">No hay productos que coincidan con la búsqueda.</p>
+                    </div>
+                )}
+            </div>
+    
     );
 };
 export default Productos;

@@ -69,7 +69,7 @@ export const ProductosProvider = ({ children }) => {
       console.error("Error al agregar:", error);
       const mensajeError = "Hubo un problema al agregar el producto.";
       setError(mensajeError);
-      alert(mensajeError);
+      toast.error(mensajeError);
     }
   };
 
@@ -91,13 +91,13 @@ export const ProductosProvider = ({ children }) => {
         p.id === productoActualizado.id ? productoActualizado : p
       ));
       console.log("Producto editado: ", productoActualizado);
-      alert("Producto editado con éxito");
+      toast.success("Producto editado con éxito");
 
     } catch (error) {
       console.error("Error al editar:", error);
       const mensajeError = "Hubo un problema al editar el producto.";
       setError(mensajeError);
-      alert(mensajeError);
+      toast.error(mensajeError);
     }
   };
 
@@ -119,14 +119,14 @@ export const ProductosProvider = ({ children }) => {
 
         // Filtra y crea un nuevo array sin el producto eliminado
         setProductos(productos.filter(p => p.id !== id));
-        alert("Producto eliminado con éxito");
+        toast.success("Producto eliminado con éxito");
         console.log("Producto eliminado, ID:", id);
       } 
       catch (error) {
       console.error(error.message);
       const mensajeError = "Hubo un problema al eliminar el producto.";
       setError(mensajeError);
-      alert(mensajeError);
+      toast.error(mensajeError);
       }
     }
   };

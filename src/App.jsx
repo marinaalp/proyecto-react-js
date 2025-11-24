@@ -33,7 +33,6 @@ function App() {
         <Route path='/joyas' element={<Joyas />} />
         <Route path='/login' element={<Login />} />
         <Route path='/admin' element={<RutaProtegida><Admin /></RutaProtegida>} />
-
       </Routes>
       <Footer />
       <ToastContainer
