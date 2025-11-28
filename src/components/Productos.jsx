@@ -1,6 +1,8 @@
 import Tarjeta from './Tarjeta';
 import { useProductosContext } from "../context/ProductosContext";
 import { useBusqueda } from "../context/BusquedaContext";
+import { useState, useEffect } from "react";
+
 
 const Productos = ({ agregarProducto }) => {
 
@@ -16,7 +18,21 @@ const Productos = ({ agregarProducto }) => {
   const productosFiltrados = productos.filter((producto) =>
     producto.title.toLowerCase().includes(busqueda.toLowerCase())
   );
-
+  
+  //paginado
+  const productosPorPagina = 8;
+  const [paginaActual, setPaginaActual] = useState(1);
+  // Resetear página si cambia la búsqueda
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [busqueda]);
+  // Calcular el índice de los productos a mostrar en la página actual
+    const indiceUltimoProducto = paginaActual * productosPorPagina;
+    const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
+    const productosPaginados = productosFiltrados.slice(indicePrimerProducto, indiceUltimoProducto);
+// Función para cambiar de página
+const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+const cambiarPagina = (numeroPagina) => setPaginaActual(numeroPagina);
     return (
 
         <div className="container my-4"> {/* Contenedor principal con margen vertical */}
@@ -29,7 +45,7 @@ const Productos = ({ agregarProducto }) => {
             
                 {productosFiltrados.length > 0 ? (
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-                {productosFiltrados.map((producto) => (
+                {productosPaginados.map((producto) => (
                     < div key={producto.id} className="col" >
                         <Tarjeta
                             producto={producto}
@@ -43,6 +59,21 @@ const Productos = ({ agregarProducto }) => {
                     <p class="alert alert-secondary">No hay productos que coincidan con la búsqueda.</p>
                     </div>
                 )}
+        {/* Paginación */}
+        <div className="d-flex justify-content-center mt-4">
+            {Array.from({ length: totalPaginas }, (_, index) => (
+                <button
+                    key={index + 1}
+                    className={`btn mx-1 ${paginaActual === index + 1 ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => cambiarPagina(index + 1)}
+                >
+                    {index + 1}
+                    </button>
+            ))}
+        </div>
+
+            
+               
             </div>
     
     );

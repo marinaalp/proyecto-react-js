@@ -19,7 +19,7 @@ const TarjetaDetalle = ({ producto }) => {
         {/* Título y Precio */}
         <h5 className="card-title">Detalles del Producto Nro {producto.id}</h5>
         
-        <p className="card-text fw-bold mt-auto">${(producto.price).toFixed(2)}</p> 
+        <p className="card-text fw-bold mt-auto">${(producto.price)}</p> 
         <p className="card-text mt-auto">${producto.description}</p> 
         {/* mt-auto para empujar el precio al fondo, y fw-bold para destacarlo */}
 
