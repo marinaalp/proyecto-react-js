@@ -1,50 +1,87 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import TarjetaDetalle from "../components/TarjetaDetalle";
+import { useProductosContext } from "../context/ProductosContext";
+import { CarritoContext } from "../context/CarritoContext";
 
 const ProductoDetalle = () => {
   const { id } = useParams();
-  const [producto, setProducto] = useState(null);
-  const [cargando, setCargando] = useState(true);
+  const navigate = useNavigate();
+  const { productos, cargando, error } = useProductosContext();
+  const { agregarAlCarrito } = useContext(CarritoContext);
+  const [cantidad] = useState(1);
+  const [agregado, setAgregado] = useState(false);
+  // Busco el producto por id en el contexto de productos
+  const producto = productos.find((prod) => prod.id === id);
 
-  useEffect(() => {
-    const fetchProducto = async () => {
-      try {
-        const resp = await fetch(
-          `https://68dc73387cd1948060aa52c6.mockapi.io/api-proyecto-v1/productos/${id}`
-        );
+  // Handlers de interaccion
+  const handleAgregarAlCarrito = () => {
+    for (let i = 0; i < cantidad; i++) {
+      agregarAlCarrito(producto);
+    }
+    setAgregado(true);
+    setTimeout(() => setAgregado(false), 2000); // Resetea el estado despues de 2 segundos
+  };
 
-        if (!resp.ok) {
-          console.log("ID no encontrado:", id);
-          setProducto(null);
-          return;
-        }
-
-        const data = await resp.json();
-        setProducto(data);
-      } catch (error) {
-        console.error("Error al obtener producto:", error);
-      } finally {
-        setCargando(false);
-      }
-    };
-
-    fetchProducto();
-  }, [id]);
-
-  if (cargando) return <p>Cargando detalle...</p>;
-  if (!producto) return <p>No existe un producto con ID: {id}</p>;
+  if (cargando) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900 mx-auto mb-4"></div>
+            <p className="text-gray-600 text-lg">Cargando producto...</p>
+          </div>
+        </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center px-4">
+        <div className="text-center">
+          <svg className="mx-auto h-16 w-16 text-red-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Error al cargar el producto</h2>
+            <p className="text-gray-600 mb-6">Se ha producido un error al cargar el producto, intenta nuevamente mas tarde</p>
+            <button
+              onClick={() => navigate('/')}
+              className="bg-black text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-800 transition duration-200"
+            >
+              Volver al Inicio
+            </button>
+        </div>
+      </div>
+    );
+  }
+  if (!producto) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center px-4">
+        <div className="text-center">
+          <svg className="mx-auto h-16 w-16 text-yellow-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Producto no encontrado</h2>
+          <p className="text-gray-600 mb-6">El producto que buscas no existe o ha sido eliminado.</p>
+          <button
+            onClick={() => navigate('/')}
+            className="bg-black text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-800 transition duration-200"
+          >
+            Volver al Inicio
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-  <>
-  <div className="container">
-    <div className="row justify-content-center">
-      <div className="col-md-12 col md-8">  
-        <TarjetaDetalle producto={producto} />
-      </div>
-    </div>    
-  </div>
-  </>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <TarjetaDetalle
+      producto={producto}
+      agregado={agregado}
+      onAgregar={handleAgregarAlCarrito}
+      onVerCarrito={() => navigate('/carrito')}
+      />
+
+    </div>
   );
 };
 

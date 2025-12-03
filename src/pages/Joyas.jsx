@@ -2,6 +2,36 @@ import React from 'react';
 import ProductosFiltrados from '../components/ProductosFiltrados';
 import TarjetaDetalle from '../components/TarjetaDetalle';
 import styles from './Joyas.module.css';
+import { useState, useContext } from 'react';
+import { CarritoContext } from '../context/CarritoContext';
+
+// Componente wrapper para un producto individual
+const TarjetaJoyasWrapper = ({ producto }) => {
+    // hooks necesarios
+    const [cantidad] = useState(1);
+    const [agregado, setAgregado] = useState(false);
+    const { agregarAlCarrito } = useContext(CarritoContext);
+
+    // Handlers de interaccion
+    const handleAgregarAlCarrito = () => {
+        for (let i = 0; i < cantidad; i++) {    
+            agregarAlCarrito(producto);
+        }
+        setAgregado(true);
+        setTimeout(() => setAgregado(false), 2000); // Resetea el estado despues de 2 segundos
+    };
+
+
+    return (
+        <TarjetaDetalle
+            producto={producto}
+            agregado={agregado}
+            onAgregar={handleAgregarAlCarrito}
+            mostrarVerCarrito={false}
+        />
+    );
+};
+
 
 const Joyas = () => {
     // 💡 Usamos el hook, pasando la categoría deseada: "jewelery"
@@ -19,7 +49,7 @@ const Joyas = () => {
                 {productos.map((producto) => (
                     <div key={producto.id} className="col">
                         {/* Usamos TarjetaDetalle para el renderizado */}
-                        <TarjetaDetalle 
+                        <TarjetaJoyasWrapper
                             producto={producto} 
                         />
                     </div>

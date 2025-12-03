@@ -1,7 +1,37 @@
 import React from 'react';
 import ProductosFiltrados from '../components/ProductosFiltrados';
 import TarjetaDetalle from '../components/TarjetaDetalle'; 
+import { useState, useContext } from 'react';
+import { CarritoContext } from '../context/CarritoContext';
+import { useNavigate } from 'react-router-dom';
 
+// Componente wrapper para un producto individual
+const TarjetaModaWrapper = ({ producto }) => {
+    // hooks necesarios
+    const [cantidad] = useState(1);
+    const [agregado, setAgregado] = useState(false);
+    const { agregarAlCarrito } = useContext(CarritoContext);
+
+    // Handlers de interaccion
+    const handleAgregarAlCarrito = () => {
+        for (let i = 0; i < cantidad; i++) {    
+            agregarAlCarrito(producto);
+        }
+        setAgregado(true);
+        setTimeout(() => setAgregado(false), 2000); // Resetea el estado despues de 2 segundos
+    };
+
+    return (
+        <TarjetaDetalle
+            producto={producto}
+            agregado={agregado}
+            onAgregar={handleAgregarAlCarrito}            
+            mostrarVerCarrito={false}
+        />
+    );
+};
+
+// Componente principal de la página de Moda
 const Moda = () => {
     // 1. Obtener productos de HOMBRE
     const { 
@@ -39,7 +69,7 @@ const Moda = () => {
                 {/* Mapeamos el array combinado */}
                 {todosLosProductos.map((producto) => (
                     <div key={producto.id} className="col">
-                        <TarjetaDetalle 
+                        <TarjetaModaWrapper
                             producto={producto} 
                         />
                     </div>
@@ -50,7 +80,7 @@ const Moda = () => {
             <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
                 {productosHombre.map((producto) => (
                     <div key={producto.id} className="col">
-                        <TarjetaDetalle 
+                        <TarjetaModaWrapper
                             producto={producto} 
                         />
                     </div>
@@ -63,7 +93,7 @@ const Moda = () => {
                 
                 {productosMujer.map((producto) => (
                     <div key={producto.id} className="col">
-                        <TarjetaDetalle 
+                        <TarjetaModaWrapper 
                             producto={producto} 
                         />
                     </div>

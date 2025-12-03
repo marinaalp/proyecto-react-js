@@ -4,7 +4,7 @@ import styles from "./FormProducto.module.css";
 import { IoMdCloseCircle } from "react-icons/io";
 
 const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
-
+  const DEFAULT_IMAGE_URL = "https://www.shutterstock.com/image-vector/cute-cat-confused-cartoon-vector-600nw-2350423433.jpg";
   const [producto, setProducto] = useState(productoInicial);
   const { agregarProducto, editarProducto, categoriasUnicas } = useProductosContext();
   //icono cerrar
@@ -61,6 +61,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
     if (validarFormulario()) {
       const productoConPrecio = {
         ...producto,
+        image: !producto.image || producto.image.trim() === "" ? DEFAULT_IMAGE_URL : producto.image,
         price: Number(producto.price)
       };
       if (modo === "agregar") {

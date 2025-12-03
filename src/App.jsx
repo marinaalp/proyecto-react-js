@@ -14,6 +14,7 @@ import RutaProtegida from './components/RutaProtegida';
 import Admin from './pages/Admin.jsx';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FacturaCompra from './pages/FacturaCompra.jsx';
 
 
 
@@ -21,7 +22,9 @@ function App() {
 
   return (
     <>
+    <div style={{ paddingTop: '80px' }}>
       <Header />
+      </div>
 
       <Routes>
         <Route path='/' element={<Inicio />} />
@@ -33,6 +36,7 @@ function App() {
         <Route path='/joyas' element={<Joyas />} />
         <Route path='/login' element={<Login />} />
         <Route path='/admin' element={<RutaProtegida><Admin /></RutaProtegida>} />
+        <Route path='/factura' element={<RutaProtegida><FacturaCompra /></RutaProtegida>} />
       </Routes>
       <Footer />
       <ToastContainer

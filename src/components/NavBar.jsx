@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ className }) => {
   return (
     <nav>
       <ul className="list-unstyled d-flex mb-0">
